@@ -1,0 +1,43 @@
+program maps;
+
+var
+  mas:array[1..500,1..500] of integer;
+  strok,stolb,ch,i,j,str,s:integer;
+  f:text;
+begin
+  randomize;
+  
+  strok:=0;  //ввод с файла
+  stolb:=0;
+  assign(f);
+  reset(f);
+  while not EOF(f) do
+    begin
+      read(f,ch);
+      inc(strok)
+    end;
+  while not EOLn(f) do
+    begin
+      read(f,ch);
+      inc(stolb)
+    end;
+    
+  for i:=1 to strok do //ввод с файла в массив
+  for j:=1 to stolb do
+    read(f,mas[i,j]);
+  repeat
+    begin
+      s:=0
+      str:=random(strok);  
+      if random(10)>mas[str,2] then
+        write(mas[str,1]);
+      
+      
+    end;
+    
+    
+    
+    
+    
+  close(f)
+end.
