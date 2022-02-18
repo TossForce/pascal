@@ -1,0 +1,32 @@
+program alphabet;
+var
+gl,sg,num,zn: set of char;
+s: string;
+i,m,n,l,p: integer;
+begin
+zn:=['.', ',', ';', ':', '!', '?', '-', '"', '(', ')' ];
+num:=['0','1','2','3','4','5','6','7','8','9'];
+gl:=['a', 'e', 'i', 'o', 'u', 'y','A', 'E', 'I', 'O', 'U', 'Y'];
+sg:=['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z','B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'];
+m:=0;
+n:=0;
+l:=0;
+p:=0;
+write('Введите предложение - ');
+readln(s);
+for i:=1 to length(s) do
+begin
+if s[i] in gl then
+m:=m+1;
+if s[i] in sg then
+n:=n+1;
+if s[i] in zn then
+l:=l+1;
+if s[i] in num then
+p:=p+1;
+
+end;
+
+writeln ('Количество гласных - ',m,'. Количество согласных - ',n);
+writeln('Количество знаков препинания - ',l,'. Количество цифр - ',p);
+end.
