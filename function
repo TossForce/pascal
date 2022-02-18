@@ -1,0 +1,18 @@
+program function;
+
+function pl(a: integer): real;
+  begin
+    pl := pi*a*a;
+  end;
+
+var
+  r1,r2:integer;
+
+begin
+  write('Введите радиус 1го круга - ');
+  readln(r1);
+  write('Введите радиус 2го круга - ');
+  readln(r2);
+
+ writeln ('Площаль валика равна - ',abs(pl(r1)-pl(r2)):1:2);
+end.
