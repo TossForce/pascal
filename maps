@@ -3,7 +3,7 @@ program maps;
 var
   mas:array[1..2,1..500] of integer;
   strok,ch,i,j,str,s,y:integer;
-  f:text;
+  f,z:text;
 begin
   randomize;
   
@@ -42,10 +42,12 @@ begin
   else
     if mas[str,2]>1 then
       mas[str,2]:=mas[str,2]-1;
-      
+  rewrite(f);
+  
+  for i:=1 to strok do //ввод с файла в массив
+  for j:=1 to 2 do
+    write (f, mas[i,j]);
+
     
-    
-    
-    
-  close(f)
+  close(f);
 end.
