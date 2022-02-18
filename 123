@@ -1,0 +1,19 @@
+program procedure;
+
+procedure pl(a: integer; var res: real);
+  begin
+    res := pi*a*a;
+  end;
+var
+  s1,s2:real;
+  r1,r2:integer;
+
+begin
+  write('Введите радиус 1го круга - ');
+  readln(r1);
+  write('Введите радиус 2го круга - ');
+  readln(r2);
+  pl(r1,s1);
+  pl(r2,s2);
+ writeln ('Площаль валика равна - ',abs(s1-s2):1:2);
+end.
