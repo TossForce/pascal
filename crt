@@ -1,0 +1,11 @@
+program crt;
+Uses CRT;
+begin
+  textbackground(5);  //модульное программирование
+  gotoxy(69,96);
+  textcolor(4);
+  readkey();
+  writeln ('Hello World');
+  delay(3000);
+  clrscr;
+end.
