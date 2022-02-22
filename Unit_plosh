@@ -1,0 +1,12 @@
+Unit plosh;
+
+Interface
+
+function pl(a:integer):real;
+
+Implementation
+   function pl(a:integer):real;
+   begin
+    pl := pi*a*a;
+   end ;
+end .
