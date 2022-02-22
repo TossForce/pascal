@@ -1,0 +1,15 @@
+uses GraphABC;
+var x1,x2,y1,y2,i:integer;
+begin
+  SetBrushColor(clGreen); 
+  setWindowSize(500, 400);
+  rectangle(200, 200, 320, 350);
+  roundRect(350, 300, 450, 340, 40, 40);
+  SetBrushColor(clTeal); 
+  ellipse(100, 100, 150, 200);
+  arc(10, 200, 50, 0, 60);
+  SetBrushColor(clRed); 
+  pie(300, 75, 75, 0, 350);
+
+
+end.
