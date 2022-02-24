@@ -1,0 +1,25 @@
+program number;  //Количество строк и символов в файле
+var
+  f:text;
+  i,j,ch,strok,simv:integer;
+  c:char;
+
+begin
+  assign(f, 'C:\abc\text.txt');
+  reset(f);
+  strok:=0;
+  simv:=0;
+  
+  while not EOF(f) do  //определяем количество строк
+    begin
+      inc(strok);
+        while not EOLN(f) do  //определяем количество символов
+          begin
+            read(f,c);
+            inc(simv);
+          end;
+        readln(f);  
+    end;       
+  writeln('Количество строк - ',strok);
+  write('Количество символов - ',simv);  
+end.
