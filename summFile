@@ -1,0 +1,28 @@
+program number;  //Сумма и произведение элементов файла
+var
+  f:text;
+  c,sum,mno,code:integer;
+  ch:char;
+
+begin
+  assign(f, 'C:\abc\321.txt');
+  reset(f);
+  sum:=0;
+  mno:=1;
+  
+  while not EOF(f) do  
+    begin
+        while not EOLN(f) do  
+          begin
+            read(f,ch);
+            val(ch,c,code);
+            sum:=sum+c;
+            mno:=mno*c;
+
+          end;
+        readln(f);  
+    end;   
+    
+  write('Сумма - ',sum,'. Произведение - ',mno);  
+    
+end.
