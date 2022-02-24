@@ -1,0 +1,41 @@
+program number;  //соединить 2 файла в третий
+var
+  f1,f2,f3:text;
+  c,sum,mno,code:integer;
+  ch:char;
+
+begin
+  assign(f1, 'C:\abc\1.txt');
+  assign(f2, 'C:\abc\2.txt');
+  assign(f3, 'C:\abc\3.txt');
+  reset(f1);
+  reset(f2);
+  rewrite (f3);
+  
+  while not EOF(f1) do  //ввод из 1го файла
+    begin
+        while not EOLN(f1) do  
+          begin
+            read(f1,ch);
+            write(f3,ch); 
+          end;
+        readln(f1);  
+    end;   
+  
+  writeln(f3);
+
+  while not EOF(f2) do  //ввод из 2го файла
+    begin
+      while not EOLN(f2) do  
+        begin
+          read(f2,ch);
+          write(f3,ch); 
+        end;
+      readln(f2);  
+    end;   
+
+close ( f1 ); 
+close ( f2 ); 
+close ( f3 ); 
+
+end.
