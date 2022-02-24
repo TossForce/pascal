@@ -1,0 +1,28 @@
+program number;  //Чётные числа
+var
+  f1,f2:text;
+  c,sum,mno,code:integer;
+  ch:char;
+
+begin
+  assign(f1, 'C:\abc\all.txt');
+  assign(f2, 'C:\abc\chet.txt');
+  reset(f1);
+  rewrite (f2);
+  
+  while not EOF(f1) do  
+    begin
+        while not EOLN(f1) do  
+          begin
+            read(f1,ch);
+            val(ch,c,code);
+            if (c mod 2) = 0 then
+              write(f2,ch); 
+
+          end;
+        readln(f1);  
+    end;   
+    
+  close (f1);
+  close (f2);
+end.
