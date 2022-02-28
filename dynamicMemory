@@ -1,0 +1,92 @@
+program yes; //ПРограмма записывает группу, предмет и преподавателя по физическому адресу, работаем по методу стека!
+Type  
+  prec=^recu; // prec - имя указателя цифрового адреса, recu - тип данных
+  recu=record //объявляем массив, что бы потом его использовать в варе.    ^ - данные по такому адресу, @ - адрес переменной
+    nomer:string; // Номер группы
+    predmet:string; // Предмет
+    prepodavatel:string; //Преподаватель
+    next:prec; // Следующий, но по факту это предыдущий!!!
+  end;
+var
+  head:prec; // head - временный цифровой адрес предыдущей записи
+  p:prec;  // р -  цифровой адрес
+  trec:recu; //временное хранение, во время цикла
+  n,k,h:integer;
+  s:string;
+  
+  procedure add(trec:recu); //Процедура записи данных в физический адрес
+  begin
+    New(p); //Выделение памяти, добавляет памяти к массиву p, новая строчка скажем так
+    p^.nomer:=trec.nomer;  // записывает в память физическую номер 
+    p^.predmet:=trec.predmet;
+    p^.prepodavatel:=trec.prepodavatel;
+    p^.next:=head;  //Присваивает полю next значение, соответствующее адресу предыдущей записи
+    head:=p;  // присваивает head текущий номер записи, что бы в след цикле обозначить им next
+  end;
+  
+  procedure show; //Процедура вывода не экран
+  begin
+    p:=head;  //Присваиваем физический адрес ПОСЛЕДНЕЙ записи
+    while p<>nil do  //выводим данные, пока физический адрес не станет равным ничему
+    begin
+      writeln(p^.nomer,' ',p^.predmet, ' ', p^.prepodavatel);  //вывод
+      p:=p^.next;  //переходим к предыдущей записи
+    end;
+  end;
+  
+  procedure vibor; //вывод по группам, предметам или преподователям
+  begin
+    write('Введите группу, предмет или преподователя, что бы получить все записи, которые их содержат - ');
+    readln(s);
+    p:=head;  //Присваиваем физический адрес ПОСЛЕДНЕЙ записи
+    while p<>nil do  //выводим данные, пока физический адрес не станет равным ничему
+    begin
+      if s=p^.nomer then
+        writeln(p^.nomer,' ',p^.predmet, ' ', p^.prepodavatel)
+          else if s=p^.predmet then
+            writeln(p^.nomer,' ',p^.predmet, ' ', p^.prepodavatel)
+              else if s=p^.prepodavatel
+                then writeln(p^.nomer,' ',p^.predmet, ' ', p^.prepodavatel);
+     
+
+      p:=p^.next;  //переходим к предыдущей записи
+    end;
+  
+  
+  end;
+  
+begin  //сама программа
+  repeat
+    writeln('1. ввод');
+    writeln('2. печать');
+    writeln('3. конец');
+    writeln('4. выбор');
+    write('Введите номер необходимой операции - ');
+    readln(n);
+    case n of // Выбор, если n равен 1 то..., если 2 то...
+      1:begin
+          h:=0;  //счётчик выполненых записей
+          write('Введите количество записей - ');
+          readln(k); //k - количество записей
+          repeat  //вводим данные во временный массив
+            inc(h); //увеличиваем счётчик на 1
+            write('Введите номер группы - ');
+            readln(trec.nomer);
+            write('Введите предмет - ');
+            readln(trec.predmet);
+            write('Введите преподавателя - ');
+            readln(trec.prepodavatel);
+            add(trec); //выполянем процедуру add
+          until k=h; //повторяем цикл, пока не введём все записи
+          writeln('Ввод закончен');
+          writeln(); 
+        end;
+      2:begin  // Если n равен 2 то процедура вывода запускатеся
+          show;
+        end;
+      4:begin
+          vibor;
+        end;
+    end;  
+  until n=3;
+end.
