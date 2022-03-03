@@ -1,0 +1,61 @@
+program OOP;
+
+Type tPredoc = class  //Батя
+   Name : string ; // поле имени
+   Age:integer; //поле возраст
+   constructor create(fName:string;fAge:integer);
+   begin
+     Name:=fName;
+     Age:=fAge;
+   end;
+   Procedure Declaration ; // Метод
+   Procedure MyName ;
+End ;
+
+Type stud = class(tpredoc) //Сынок
+  group:integer;
+  constructor create(fName:string;fAge:integer;fgroup:integer);
+   begin
+     Name:=fName;
+     Age:=fAge;
+     group:=fgroup;
+   end;
+  Procedure gr;
+  Destructor destroy;
+    begin
+    end;
+end;
+
+  
+Procedure stud.gr ; //Добавление номера группы
+begin
+   writeln(' Номер группы -',group:4);
+end;
+
+Procedure tPredoc.Declaration ; //Реализация 1го метода
+begin
+   writeln ('Я – предок!');
+end;
+
+Procedure tPredoc.MyName ; //Реализация 2го метода
+begin
+   writeln;
+   write('Я –', Name,'. Возраст -',age:4);
+end;
+
+var
+  v1:tPredoc;
+  v2:stud;
+begin
+   v1:=tPredoc.Create(' Сидоров Николай Иванович',66);
+   v1.Declaration;
+   v1.MyName;
+   
+   v2:=stud.Create(' Иванов Иван Иванович',20,132);
+   v2.MyName;
+   v2.gr;
+   v2.destroy;
+   v2.MyName;
+   v2.gr;
+  
+end.
