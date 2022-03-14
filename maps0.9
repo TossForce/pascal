@@ -1,0 +1,199 @@
+program cart;
+{$reference System.Windows.Forms.dll}
+{$apptype windows}
+uses System.Windows.Forms,
+  GraphABC,
+  ABCObjects,
+  ABCButtons;
+
+type
+  prec = ^m1; // prec - имя указателя цифрового адреса, recu - тип данных
+  m1 = record  //
+    Num: integer ; // Номер
+    Name: string; //Имя карты
+    Sila: integer; //Сила карты
+    pred: prec; //Предыдущая запись
+  End;
+
+var
+  f: text;
+  ch: string;
+  last: prec; // head - временный цифровой адрес предыдущей записи
+  p: prec;  // р -  цифровой адрес
+  trec: m1; //временное хранение, во время цикла
+  ok, vr, e, q, z, t, n, k, h: integer;
+
+procedure prov(name: string; f: text);
+var
+  a: string;
+begin
+  ok := 0;
+  reset(f);
+  var h: integer;
+  readln(f, h);
+  for var i := 1 to h do
+  begin
+    readln(f, a);
+    if name = a then
+      ok := 1;
+    readln(f, a);
+    
+  end;
+  close(f); 
+  
+  
+end;
+
+procedure add(trec: m1); //Процедура записи данных в физический адрес
+var
+  p: prec;
+begin
+  New(p); //Выделение памяти, добавляет памяти к массиву p, новая строчка скажем так
+  p^.num := trec.Num;  // записывает в память физическую номер 
+  p^.Name := trec.Name;
+  p^.Sila := trec.Sila;
+  p^.pred := last;  //Присваивает полю pred значение, соответствующее адресу предыдущей записи
+  last := p;  // присваивает head текущий номер записи, что бы в след цикле обозначить им next
+end;
+
+procedure show; //Процедура вывода не экран
+var
+  p: prec;
+begin
+  writeln;
+  p := last;  //Присваиваем физический адрес ПОСЛЕДНЕЙ записи
+  while p <> nil do  //выводим данные, пока физический адрес не станет равным ничему
+  begin
+    writeln(p^.Num:3, ' ', p^.Name, ' ', p^.Sila);  //вывод
+    p := p^.pred;  //переходим к предыдущей записи
+  end;
+  writeln;
+end;
+
+procedure save(f: text);
+var
+  p: prec;
+begin
+  
+  rewrite(f);
+  writeln(f, h);
+  
+  p := last;  //Присваиваем физический адрес ПОСЛЕДНЕЙ записи
+  while p <> nil do 
+  begin
+    writeln(f, p^.Name);
+    writeln(f, p^.Sila);
+    p := p^.pred; 
+  end;
+  close(f);
+  
+end;
+
+
+procedure vibor;
+begin
+  z := 0;
+  randomize;
+  repeat
+    
+    p := last;
+    q := random(30); 
+    t := random(h) + 1;  //определяем номер карты
+    while p <> nil do//повторяем поиск карты, пока z не станет равен 1
+    begin
+      if (t = p^.Num) and (q < p^.Sila)  then  //если номер равен t и сила больше чем рандом из 30 то 
+      begin
+        
+        z := 1;
+        Clipboard.Clear;
+        Clipboard.SetText('!pub ' + p^.Name);
+        writeln(p^.Name);
+        write('Если хорошо сыграли то 1, если нет то 2 - ');
+        readln(n);
+        case n of 
+          1:
+            begin
+              if p^.Sila < 30 then
+                inc(p^.Sila);
+            end;
+          2:
+            begin
+              if p^.Sila > 1 then
+                p^.Sila := p^.Sila - 1;  
+            end;
+        end;
+      end;
+      p := p^.pred;  //переходим к предыдущей записи
+    end;
+    
+  until z = 1;
+end;
+
+
+
+
+begin  //сама программа
+  assign(f, 'maps.txt');
+  reset(f);
+  readln(f, h); //счётчик выполненых записей
+  for var i := 1 to h do
+  begin
+    trec.Num := i;  //во временный пишем номер
+    
+    readln(f, ch);
+    trec.Name := ch; //Имя карты
+    
+    readln(f, ch);
+    val(ch, vr, e);
+    trec.Sila := vr; //сила 
+    add(trec);
+  end;
+  close(f);
+  repeat
+    writeln('1. добавить карту');
+    writeln('2. выбор карты');
+    writeln('3. вывод');
+    writeln('4. сохранить файл');
+    writeln('5. конец');
+    write('Введите номер необходимой операции - ');
+    readln(n);
+    
+    case n of // Выбор, если n равен 1 то..., если 2 то...
+      1:
+        begin  //ввод карт
+          write('Введите название карты - ');
+          readln(trec.Name);          
+          prov(trec.Name, f);
+          if ok = 0 then
+          begin
+            inc(h); //увеличиваем счётчик на 1\
+            trec.Num := h;
+            trec.Sila := 3;
+            add(trec); //выполянем процедуру add
+            writeln('Карта добавлена');
+          end
+          else
+            writeln('Такая карта уже имеется!');
+          
+          
+          
+          writeln(); 
+        end;
+      2:
+        begin  // Если n равен 2 то процедура вывода запускатеся
+          vibor;
+        end;
+      3:
+        begin
+          show;
+        end;
+      4:
+        begin
+          save(f);
+        end;
+    end;
+    
+  until n = 5;
+  
+  save(f);
+end.
